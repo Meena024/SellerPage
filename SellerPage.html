@@ -1,10 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Seller Access Page</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body style="background-color: antiquewhite;">
-    
-</body>
+  </head>
+  <body style="background-color: antiquewhite">
+    <h1
+      style="
+        margin-left: 5%;
+        margin-right: 5%;
+        text-align: center;
+        border: #000 solid;
+        padding: 1%;
+      "
+    >
+      Seller Access Space
+    </h1>
+    <fieldset style="margin-left: 5%; margin-right: 5%">
+      <legend
+        style="
+          font-size: large;
+          font-weight: bold;
+          border: 1px solid #000;
+          padding-left: 10px;
+          padding-right: 10px;
+          background-color: aliceblue;
+        "
+      >
+        New Product
+      </legend>
+      <h3>
+        <form onsubmit="store()">
+          <label for="price">Price:</label>
+          <input
+            type="number"
+            id="price"
+            placeholder="Enter in INR"
+          /><br /><br />
+
+          <label for="product_name"> Product name: </label>
+          <input type="text" id="product_name" /><br /><br />
+
+          <label for="category">Category:</label>
+          <select id="category">
+            <option></option>
+            <option value="Electronics">Electronics</option>
+            <option value="Health">Health</option>
+            <option value="Skin care">Skin Care</option></select
+          ><br /><br />
+
+          <label for="product_description">Product Description:</label>
+          <textarea
+            id="product_description"
+            style="height: 30px"
+            placeholder="(Optional)"
+          ></textarea>
+          <br /><br />
+          <button type="submit"
+            style="
+              background-color: aliceblue;
+              font-weight: bold;
+              border: 1px solid black;
+            "
+          >
+            Add Product
+          </button>
+        </form>
+      </h3>
+    </fieldset>
+    <br />
+  </body>
 </html>
