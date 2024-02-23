@@ -83,6 +83,25 @@
         Products List
       </legend>
       <br />
+      <button onclick="viewtraditional()" id="traditional" style="font-weight: bold; background-color: aliceblue; border: 1px solid black;">Traditional View</button>
+      <button onclick="viewtabulation()" id="tabulational" style="background-color: aliceblue; border: 1px solid black;">Tabulation View</button>
+      <br><br>
+      
+      <input type="text" id="search" list="suggestions" oninput="showsuggestions()">
+      <datalist id="suggestions">
+      </datalist>
+      <button onclick="filter()" style="background-color: aliceblue; font-weight: bold; border: 1px solid black;">Search</button>
+      <button onclick = "refreshData()" style="background-color: aliceblue; font-weight: bold; border: 1px solid black;">Refresh</button>
+      <br><br>
+
+      <label for="sort">Sort</label>
+      <select id="sort">
+          <option value="price">Price</option>
+          <option value="product_name">Product</option>
+          <option value="category">Category</option>
+      </select>
+      <button onclick="sort()" style="background-color: aliceblue; font-weight: bold; border: 1px solid black;">Go</button>
+      <br><br>
       <div id="container"></div>
     </fieldset>
   </body>
