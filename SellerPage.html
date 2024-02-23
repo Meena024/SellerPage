@@ -109,6 +109,7 @@
     const API_URL =
       "https://crudcrud.com/api/e927829dcf2a4650b9d80eb216d8257f/product_details";
         let displaydata;
+        let view = 'traditional';
 
         window.addEventListener("DOMContentLoaded", () => {
             refreshData();
@@ -118,7 +119,7 @@
             axios.get(API_URL)
             .then(response => {
                 displaydata = response.data;
-                display(displaydata);
+                (view == 'traditional')? displayTraditional(displaydata):displayTabulation(displaydata);
             })
             .catch((error) => {
                 console.error( error);
@@ -175,10 +176,10 @@
             })
             .then(response => {
                 displaydata = response.data;
-                display(displaydata);
+                (view == 'traditional')? displayTraditional(displaydata):displayTabulation(displaydata);
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
             });
             document.getElementById("price").value = "";
             document.getElementById("product_name").value = "";
@@ -198,10 +199,10 @@
             })
             .then(response => {
                 displaydata = response.data;
-                display(displaydata);
+                (view == 'traditional')? displayTraditional(displaydata):displayTabulation(displaydata);
             })
             .catch((error) => {
-                console.log('Error:', error);
+                console.error('Error:', error);
             });
         }
 
@@ -220,14 +221,32 @@
             })
             .then(response => {
                 displaydata = response.data;
-                display(displaydata);
+                (view == 'traditional')? displayTraditional(displaydata):displayTabulation(displaydata);
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
         }
+        
+        function viewtraditional(){
+            view = 'traditional';
+            var tradition = document.getElementById("traditional");
+            var tabular = document.getElementById("tabulational");
+            tradition.style.fontWeight = "bold";
+            tabular.style.fontWeight = "normal";
+            displayTraditional(displaydata);
+        }
 
-        function display(products) {
+        function viewtabulation(){
+            view = 'tabulational';
+            var tradition = document.getElementById("traditional");
+            var tabular = document.getElementById("tabulational");
+            tradition.style.fontWeight = "normal";
+            tabular.style.fontWeight = "bold";
+            displayTabulation(displaydata);
+        }
+
+        function displayTraditional(products) {
             let container = document.getElementById("container");
             container.innerHTML = `
             <h3>Electronics:</h3>
@@ -241,7 +260,6 @@
             document.getElementById("container3").innerHTML = '';
 
             if (products && products.length > 0) {
-                console.log(products);
                 products.forEach(product => {
                     let id;
                     switch (product.category.toLowerCase()) {
@@ -263,6 +281,31 @@
                         </li>`;
                 });
             }
+        }
+
+        function displayTabulation(products) {
+            let container = document.getElementById("container");
+            let tableHTML = `
+                <table id="table" style="border-collapse: collapse; width: 100%; border: 1px solid black;">
+                    <tr style="border: 1px solid black;">
+                        <th style="border: 1px solid black;">Category</th>
+                        <th style="border: 1px solid black;">Price</th>
+                        <th style="border: 1px solid black;">Product</th>
+                    </tr>
+            `;
+            if (products && products.length > 0) {
+                products.forEach(product => {
+                    tableHTML += `
+                        <tr style="border: 1px solid black;">
+                            <td style="border: 1px solid black;">${product.category}</td>
+                            <td style="border: 1px solid black;">${product.price}</td>
+                            <td style="border: 1px solid black;">${product.product_name}</td>
+                        </tr>
+                    `;
+                });
+            }
+            tableHTML += `</table>`;
+            container.innerHTML = tableHTML;
         }
   </script>
 </html>
