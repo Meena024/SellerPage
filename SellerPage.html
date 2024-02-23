@@ -228,6 +228,17 @@
             });
         }
         
+        function sort() {
+            let type = document.getElementById("sort").value;
+            if (type === 'price') {
+                displaydata.sort((a, b) => (parseInt(a.price,10) - parseInt(b.price,10)));
+            } else {
+                displaydata.sort((a, b) => a[type].localeCompare(b[type]));
+            }
+
+            (view == 'traditional') ? displayTraditional(displaydata) : displayTabulation(displaydata);
+        }
+
         function filter() {
             searchText = document.getElementById("search").value.trim();
             if (!searchText.trim()) {
