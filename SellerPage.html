@@ -155,6 +155,28 @@
             });
         }
 
+        function edit(id) {
+            axios.get(`${API_URL}/${id}`)
+            .then(response => {
+                document.getElementById("price").value = response.data.price;
+                document.getElementById("product_name").value = response.data.product_name;
+                document.getElementById("category").value = response.data.category;
+                document.getElementById("product_description").value = response.data.product_description;
+                return axios.delete(`${API_URL}/${id}`);
+            })
+            .then(response => {
+                console.log('Product available to edit!',response.data);
+                return axios.get(API_URL);
+            })
+            .then(response => {
+                displaydata = response.data;
+                display(displaydata);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
         function display(products) {
             let container = document.getElementById("container");
             container.innerHTML = `
