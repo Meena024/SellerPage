@@ -136,6 +136,25 @@
             document.getElementById("product_description").value = "";
         }
 
+        function remove(id) {
+            axios.delete(`${API_URL}/${id}`)
+            .then(response => {
+                console.log('Product Deleted successfully!',response.data);
+            document.getElementById("price").value = "";
+            document.getElementById("product_name").value = "";
+            document.getElementById("category").value = "";
+            document.getElementById("product_description").value = "";
+                return axios.get(API_URL);
+            })
+            .then(response => {
+                displaydata = response.data;
+                display(displaydata);
+            })
+            .catch((error) => {
+                console.log('Error:', error);
+            });
+        }
+
         function display(products) {
             let container = document.getElementById("container");
             container.innerHTML = `
