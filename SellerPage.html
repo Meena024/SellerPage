@@ -228,6 +228,58 @@
             });
         }
         
+        function filter() {
+            searchText = document.getElementById("search").value.trim();
+            if (!searchText.trim()) {
+                axios.get(API_URL)
+                .then(response => {
+                    displaydata = response.data;
+                    (view=='traditional')? displayTraditional(displaydata):displayTabulation(displaydata);
+                })
+                .catch(err => console.log(err));
+            }
+            else {
+                axios.get(API_URL)
+                .then(response => {
+                    products = response.data;
+                    displaydata = products.filter(product => {
+                        return (
+                            product.product_name.toLowerCase().includes(searchText.toLowerCase()) ||
+                            product.category.toLowerCase().includes(searchText.toLowerCase())
+                        );
+                    });
+                    (view == 'traditional')? displayTraditional(displaydata):displayTabulation(displaydata);
+                })
+                .catch(err => console.log(err));
+            }
+        }
+
+        async function showsuggestions() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let dataList = document.getElementById('suggestions');
+            dataList.innerHTML = `
+                <option value="Electronics"></option>
+                <option value="Health"></option>
+                <option value="Skin care"></option>
+            `;
+            let products = (await axios.get(API_URL)).data;
+            let data = new Set();
+            let filteredOptions = products.filter(product => {
+                let productName = product.product_name.toLowerCase();
+                if (productName.includes(input) && !data.has(productName)) {
+                    data.add(productName); 
+                    return true;
+                }
+                return false;
+            });
+            filteredOptions.forEach(product => {
+                let option = document.createElement('option');
+                option.value = product.product_name;
+                dataList.appendChild(option);
+            });
+            data.clear();
+        }
+
         function viewtraditional(){
             view = 'traditional';
             var tradition = document.getElementById("traditional");
